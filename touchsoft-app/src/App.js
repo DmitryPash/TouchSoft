@@ -1,46 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style/App.css";
 function App() {
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(0);
   const [word, setWord] = useState("asd");
   const [bcg, setBcg] = useState("counter");
 
-  // function Uslovie() {
-  //   if (count < 0) {
-  //     false;
-  //   } else if (count == 0) {
-  //     setCount(0);
-  //     setWord("0");
-  //     setBcg("");
-  //     console.log("==0");
-  //   } else if (count % 2 !== 0) {
-  //     setWord("Четное");
-  //     setBcg("odd");
-  //   } else if (count % 2 == 0) {
-  //     setWord("Не четное");
-  //     setBcg("even");
-  //   }
-  // }
+  useEffect(() => {
+    logica();
+  });
+
   function logica() {
-    if (count < 1) {
-      setCount(0);
-      setWord("0");
-    } else if (count % 2 !== 0 && count !== 0) {
-      setWord("чётное");
-      setBcg("counter odd");
-    } else {
-      setWord("не чётное");
+    if (count % 2 == 0 && count !== 0) {
       setBcg("counter even");
+      setWord("четное");
+    } else if (count % 2 !== 0 && count !== 0) {
+      setBcg("counter odd");
+      setWord("не четное");
+    } else {
+      setWord("0");
     }
   }
 
   function Incr() {
-    logica();
     setCount(count + 1);
   }
   function Dicr() {
-    setCount(count - 1);
-    logica();
+    if (count >= 1) {
+      setCount(count - 1);
+    }
   }
   function Reset() {
     setCount(count - count);
@@ -52,9 +39,7 @@ function App() {
     <div className="App">
       <div className="wrapper">
         <div className={bcg}>{count}</div>
-        <div className="box-text">
-          Введено {word} число - {count}
-        </div>
+        <div className="box-text">Введено {word} число</div>
         <div className="btn-group">
           <button onClick={Dicr}>Decriase</button>
           <button onClick={Incr}>Increase</button>
